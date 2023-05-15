@@ -56,7 +56,11 @@ contract WalletDeployer {
      */
     function drop(bytes memory wat) external returns (address aim) {
         aim = fact.createProxy(copy, wat);
-        console.logBool(AuthorizerUpgradeable(mom));
+        console.log(aim);
+
+        // console.logBool(!can(msg.sender, aim));
+        console.log("==w");
+        console.logBool(!AuthorizerUpgradeable(mom).can(msg.sender, aim));
 
         if (mom != address(0) && !can(msg.sender, aim)) {
             revert Boom();

@@ -79,6 +79,22 @@ describe("[Challenge] Wallet mining", function () {
   it("Execution", async function () {
     /** CODE YOUR SOLUTION HERE */
 
+    const authorizer2 = await upgrades.deployProxy(
+      await ethers.getContractFactory("AuthorizerUpgradeable", player),
+      [[ward.address], [DEPOSIT_ADDRESS]], // initialization data
+      { kind: "uups", initializer: "init" }
+    );
+
+    console.log(
+      "authorizer2 storage",
+      await ethers.provider.getStorageAt(
+        authorizer2.address,
+        "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc"
+      )
+    );
+    console.log("ward.address", ward.address);
+    console.log("auth owner", await authorizer2.owner());
+    //  await authorizer2.connect(player).upgradeTo(player.address);
     const WALLET_OWNER_ADDR = `0x1aa7451dd11b8cb16ac089ed7fe05efa00100a6a`;
 
     await player.sendTransaction({
